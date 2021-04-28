@@ -1,4 +1,5 @@
 mongoose = require('mongoose');
+// Database URL
 const DATABASE = 'mongodb+srv://Siddhartha123:tylerdurden@cluster0.6o2da.mongodb.net/test?retryWrites=true&w=majority'
 mongoose.connect(DATABASE, {
   useNewUrlParser: true,
@@ -13,6 +14,7 @@ mongoose.connection.once('open', () => {
   console.log("MongoDB connected");
 });
 
+// Import Model
 require('./models/Url');
 
 const express = require('express');
@@ -22,10 +24,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/favicon.ico', express.static('./favicon.ico'));
-
 const Url = mongoose.model('Url');
 
+// Create Routes
 app.get('/', (req, res) => {
   res.writeHead(200, {
     'Content-Type': 'text/html'
@@ -38,22 +39,6 @@ app.get('/', (req, res) => {
       res.write(data);
     }
     res.end();
-  });
-})
-
-app.post('/', async (req, res) => {
-  const url = req.body.url;
-  const instance = new Url({
-    url: url,
-    visitors: 0
-  });
-  short = JSON.stringify(instance._id)
-  const id = short.slice(short.length-7, short.length-1)
-  instance.id = id;
-  await instance.save()
-  res.send({
-    message: `${id} was created`,
-    url: `${id}`,
   });
 })
 
@@ -93,6 +78,22 @@ app.post('/analytics', async (req, res) => {
   })
 })
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log('Listening on port 3000');
+app.post('/', async (req, res) => {
+  const url = req.body.url;
+  const instance = new Url({
+    url: url,
+    visitors: 0
+  });
+  short = JSON.stringify(instance._id)
+  const id = short.slice(short.length-7, short.length-1)
+  instance.id = id;
+  await instance.save()
+  res.send({
+    message: `${id} was created`,
+    url: `${id}`,
+  });
+})
+
+app.listen(process.env.PORT || 8000, () => {
+  console.log('Listening on port 8000');
 })
