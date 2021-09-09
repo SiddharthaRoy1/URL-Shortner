@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
   res.writeHead(200, {
     'Content-Type': 'text/html'
   });
-  fs.readFile('./views/index.html', null, function (error, data) {
+  fs.readFile('./index.html', null, function (error, data) {
     if (error) {
       res.writeHead(404);
       res.write('Route not found!');
@@ -59,7 +59,7 @@ app.get('/analytics/:route', async (req, res) => {
   res.writeHead(200, {
     'Content-Type': 'text/html'
   });
-  fs.readFile('./views/count.html', null, function (error, data) {
+  fs.readFile('./count.html', null, function (error, data) {
     if (error) {
       res.writeHead(404);
       res.write('Route not found!');
