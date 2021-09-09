@@ -20,7 +20,7 @@ require('./models/Url');
 
 const express = require('express');
 const fs = require('fs');
-
+const port = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -95,6 +95,6 @@ app.post('/', async (req, res) => {
   });
 })
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log('Listening on port 3000');
+app.listen(port, () => {
+  console.log('Listening on port ${port}');
 })
